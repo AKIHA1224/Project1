@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>A Map of Dementia-Related Missing Persons in Japan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+  <script src="https://unpkg.com/scrollama"></script>
+  <script src="https://public.flourish.studio/resources/embed.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      font-family: 'Kaisei Decol', serif;
+      height: 100%;
+    }
+
+    #map {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      z-index: 0;
+    }
+    .map-layer {
+      position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+    transition: opacity 1s ease;
+    }
+
+    .map-layer.hidden {
+    opacity: 0;
+    pointer-events: none;
+    }
+
+    .intro {
+      padding: 1em 1em;
+      background: rgb(0, 0, 0);
+      font-size: 1.5em;
+      color: white;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .flourish-section {
+      padding: 2em 1em;
+      background: rgb(255, 255, 255);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .flourish-section h2 {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 0.5em;
+      color: #222;
+    }
+
+    .flourish-section p {
+      font-size: 1.1em;
+      line-height: 1.6;
+      text-align: left;
+      margin: 0 auto 2em auto;
+      max-width: 800px;
+      color: #333;
+    }
+
+    .flourish-section .flourish-embed {
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+      min-height: 500px;
+    }
+
+    .step-container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .step {
+      margin: 30em auto;
+    }
+
+    .step-content {
+      max-width: 800px;
+      margin: 2em auto;
+      padding: 2em;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: opacity 0.5s ease-out;
+      opacity: 0;
+    }
+
+    .step-left .step-content {
+      margin-left: 0;
+      margin-right: auto;
+      width: 48%;
+      align-self: flex-start;
+    }
+
+    .step-right .step-content {
+      margin-right: 0;
+      margin-left: auto;
+      width: 48%;
+      align-self: flex-end;
+    }
+
+    .step.active .step-content {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .step img,
+    .flourish-embed {
+      width: 100%;
+      max-width: 100%;
+      min-height: 400px;
+    }
+
+    @media (max-width: 768px) {
+      .step-left .step-content,
+      .step-right .step-content {
+        width: 100%;
+        margin: 0 auto;
+        align-self: center;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+   <div id="map1" class="map-layer"></div>
+   <div id="map2" class="map-layer hidden"></div>
+
+  <section class="intro">
+    <h1>A Map of Dementia-Related Missing Persons in Japan</h1>
+    <p><em>Based on data released by the National Police Agency</em></p>
+    <p>By Akiha Komatsu</p>
+  </section>
+
+  <section class="flourish-section">
+    <h2>Please take a moment to explore the data</h2>
+    <p>
+      The map below shows the number of dementia-related missing persons per 100,000 people in each prefecture from 2012 to 2024.<br>
+      You can switch between years using the tabs to see how the situation has changed over time.<br>
+      We invite you to take your time exploring the map and noticing any trends or patterns that stand out to you.
+    </p>
+    <div class="flourish-embed flourish-map" data-src="visualisation/23946579">
+      <noscript><img src="https://public.flourish.studio/visualisation/23946579/thumbnail" width="100%" alt="map visualization" /></noscript>
+    </div>
+  </section>
+
+  <div class="step-container">
+    <section class="step">
+      <div class="step-content">
+        <h2>Now, let’s take a closer look at the data from 2024</h2>
+      </div>
+    </section>
+
+    <section class="step step-left">
+      <div class="step-content">
+        <h2>Trends in Dementia-Related Missing Persons (2012–2024)</h2>
+        <img src="Trends in Dementia-Related Missing Persons (2012–2024).png" alt="Trend graph" />
+        <p>According to the National Police Agency, the number of dementia-related missing person reports in 2024 was 18,121.<br>
+          While this represents a decrease from the record high of 19,039 in 2023, the figure remains at a high level.<br>
+          In Japan, it is estimated that over 4.4 million people aged 65 and older are living with dementia, and the proportion continues to rise each year.</p>
+      </div>
+    </section>
+
+    <section class="step step-right">
+      <div class="step-content">
+        <h2>Shifting Leaders in Missing Person Rates Due to Dementia: 2012–2024</h2>
+        <img src="02.png" alt="Ranking graph" />
+        <p>In 2024, Nara had the highest rate of dementia-related missing persons.<br>
+          Hyogo, which has ranked first seven times since 2012, continues to show a high rate.<br>
+          Toyama and Osaka have also consistently remained in the top 10 since 2012, indicating a persistent trend.</p>
+      </div>
+    </section>
+
+    <section class="step step-left">
+      <div class="step-content">
+        <h2>Are Prefectures with Higher Aging Rates Also Seeing Higher Rates of Dementia-Related Missing Persons?</h2>
+        <img src="new_03.svg" alt="Elderly Population vs Missing Rate" />
+        <p>As of 2012, the number of elderly people with dementia in Japan was estimated at approximately 4.62 million, meaning that about 1 in 7 people aged 65 and over (a prevalence rate of 15.0%) had dementia.<br>
+          It is also projected that by 2025, about 1 in 5 elderly individuals will have dementia.<br>
+          However, as this graph shows, there does not appear to be a clear correlation between the aging rate and the rate of dementia-related missing persons by prefecture.<br>
+          A higher aging rate does not necessarily correspond to a higher rate of dementia-related disappearances.</p>
+      </div>
+    </section>
+
+    <section class="step step-right">
+      <div class="step-content">
+        <h2>Why Hyogo and Nara?</h2>
+        <p>More analysis coming soon...</p>
+      </div>
+    </section>
+
+    <section class="step">
+      <div class="step-content">
+        <h2>Challenges in Locating Missing Dementia Patients</h2>
+        <p>Of the dementia-related missing persons in 2024, 491 were found deceased.<br>
+          About 80% of them—382 individuals—were confirmed dead within a 5-kilometer radius from where they had gone missing.<br>
+          More than half of the locations where the bodies were found were difficult-to-search areas such as forests, as well as rivers and irrigation canals.<br>
+          Although GPS devices that can track a person’s location and drone-assisted searches are considered effective for early detection, countermeasures remain insufficient.</p>
+      </div>
+    </section>
+
+    <section class="step">
+      <div class="step-content">
+        <h2>"Just the Tip of the Iceberg"</h2>
+        <p>These figures only reflect cases in which families or others have filed official missing person reports.<br>
+          It is believed that there are also many unreported cases—particularly among elderly people living alone—that are not captured in the data.</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2024 Akiha Komatsu. All rights reserved.</p>
+    </footer>
+  </div>
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiYWtpaGEiLCJhIjoiY21iem1ydnN0MjN2MDJpcHdvZnZ6bHVlYSJ9.hJ3dwzCViC6JE8lhnIDiGA';
+
+  const map1 = new mapboxgl.Map({
+    container: 'map1',
+    style: 'mapbox://styles/akiha/cmcbce7wt02nh01s2hqtqhgg5',
+    center: [138, 37.5],
+    zoom: 4.5,
+    interactive: false
+  });
+
+  const map2 = new mapboxgl.Map({
+    container: 'map2',
+    style: 'mapbox://styles/akiha/cmccdvcfm004m01qs9dgx1ru6',
+    center: [138, 37.5],
+    zoom: 4.5,
+    interactive: false
+  });
+
+  function resetHighlightLayer() {
+    map1.once('styledata', () => {
+      if (map1.getSource('highlight-nara-hyogo')) {
+        map1.setFilter('highlight-nara-hyogo', ['in', 'nam_ja', '奈良県', '兵庫県']);
+      }
+    });
+  }
+
+  map1.on('load', () => {
+    map1.setFilter('highlight-nara-hyogo', ['in', 'nam_ja', '奈良県', '兵庫県']);
+  });
+
+  const scroller = scrollama();
+  scroller
+    .setup({ step: '.step', offset: 0.8 })
+    .onStepEnter(({ element, index }) => {
+      document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+      element.classList.add('active');
+
+      if (index <= 5) {
+        fadeToMap1();
+        const center = index === 4 ? [135.5, 34.5] : [138, 37.5];
+        const zoom = index === 4 ? 7 : 4.5;
+        map1.flyTo({ center, zoom });
+      }
+
+      if (index === 6) {
+        fadeToMap2();
+        map2.flyTo({ center: [138, 37.5], zoom: 4.5 });
+      }
+    });
+
+  function fadeToMap1() {
+    document.getElementById('map1').classList.remove('hidden');
+    document.getElementById('map2').classList.add('hidden');
+    resetHighlightLayer();
+  }
+
+  function fadeToMap2() {
+    document.getElementById('map1').classList.add('hidden');
+    document.getElementById('map2').classList.remove('hidden');
+  }
+
+  window.addEventListener('load', () => {
+    document.getElementById('map1').classList.remove('hidden');
+    document.getElementById('map2').classList.add('hidden');
+  });
+</script>
+
+
+</body>
+</html>
