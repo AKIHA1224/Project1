@@ -96,6 +96,9 @@
       transition: opacity 0.5s ease-out;
       opacity: 0;
     }
+    .step-content h2{
+      text-align: center;
+    }
 
     .step-left .step-content {
       margin-left: 0;
@@ -131,6 +134,14 @@
         align-self: center;
         transform: none;
       }
+    }
+    .footer {
+      text-align: center;
+      padding: 1em;
+      background: rgb(0, 0, 0);
+      color: white;
+      position: relative;
+      z-index: 2;
     }
   </style>
 </head>
@@ -197,18 +208,22 @@
 
     <section class="step step-right">
       <div class="step-content">
-        <h2>Why Hyogo and Nara?</h2>
-        <p>More analysis coming soon...</p>
+        <h2>Some Dementia-Related Missing Cases End in Death</h2>
+        <p>In 2024, <strong>382 people with dementia who had gone missing were later found dead</strong> within a five-kilometer radius of where they disappeared.<br>
+           Many were discovered in places that are difficult to search, such as rivers, forests, and irrigation canals.<br>
+           In Toyama Prefecture, which tends to have a high rate of dementia-related missing persons, over 11,000 kilometers of agricultural waterways run through both farmland and residential areas, creating unique risks.<br>
+           In 2022, 16 people died after falling into these canals—accounting for about a quarter of such deaths nationwide.
+        </p>
       </div>
     </section>
 
     <section class="step">
       <div class="step-content">
         <h2>Challenges in Locating Missing Dementia Patients</h2>
-        <p>Of the dementia-related missing persons in 2024, 491 were found deceased.<br>
-          About 80% of them—382 individuals—were confirmed dead within a 5-kilometer radius from where they had gone missing.<br>
-          More than half of the locations where the bodies were found were difficult-to-search areas such as forests, as well as rivers and irrigation canals.<br>
-          Although GPS devices that can track a person’s location and drone-assisted searches are considered effective for early detection, countermeasures remain insufficient.</p>
+        <p>One common factor among prefectures with high numbers of dementia-related missing persons is that families often don't realize their loved one is missing until several hours have passed.<br>
+           Additionally, it is often difficult to predict where the person may have gone. However, the exact reasons why these particular prefectures have higher rates of dementia-related missing cases remain unclear.<br></p>
+        
+        <p>While GPS devices that track location and drone-assisted searches are considered effective tools for the early discovery of missing individuals, the implementation of such measures is still a work in progress.</p>
       </div>
     </section>
 
@@ -258,23 +273,37 @@
 
   const scroller = scrollama();
   scroller
-    .setup({ step: '.step', offset: 0.8 })
-    .onStepEnter(({ element, index }) => {
-      document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
-      element.classList.add('active');
+  .setup({ step: '.step', offset: 0.8 })
+  .onStepEnter(({ element, index }) => {
+    document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+    element.classList.add('active');
 
-      if (index <= 5) {
-        fadeToMap1();
-        const center = index === 4 ? [135.5, 34.5] : [138, 37.5];
-        const zoom = index === 4 ? 7 : 4.5;
-        map1.flyTo({ center, zoom });
+    if (index <= 5) {
+      fadeToMap1();
+
+      let center = [138, 37.5];
+      let zoom = 4.5;
+
+      if (index === 2) {
+        center = [135.5, 34.5];
+        zoom = 7;
+        map1.setFilter('highlight-nara-hyogo', ['in', 'nam_ja', '奈良県', '兵庫県']);
+      } else if (index === 4) {
+        center = [137.2, 36.7];
+        zoom = 7.5;
+        map1.setFilter('highlight-nara-hyogo', ['in', 'nam_ja', '富山県']);
+      } else {
+        map1.setFilter('highlight-nara-hyogo', ['in', 'nam_ja', '奈良県', '兵庫県']);
       }
 
-      if (index === 6) {
-        fadeToMap2();
-        map2.flyTo({ center: [138, 37.5], zoom: 4.5 });
-      }
-    });
+      map1.flyTo({ center, zoom });
+    }
+
+    if (index === 6) {
+      fadeToMap2();
+      map2.flyTo({ center: [138, 37.5], zoom: 4.5 });
+    }
+  });
 
   function fadeToMap1() {
     document.getElementById('map1').classList.remove('hidden');
