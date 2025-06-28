@@ -25,7 +25,7 @@ These are the sources for my data:
 |Number of dementia-related missing persons by prefecture in Japan|National Police Agency, 2012–2024 (PDF)|
 |Total population by prefecture in Japan (2012–2024)|Portal Site of Official Statistics of Japan (e-Stat)|
 |Population aged 65 and over by prefecture in Japan (2012–2024)|Portal Site of Official Statistics of Japan (e-Stat)|
-|GeoJSON data of Japanese prefectures|Geospatial Information Authority of Japan (GSI)https://github.com/dataofjapan/land/blob/master/japan.geojson|
+|GeoJSON data of Japanese prefectures|Geospatial Information Authority of Japan (GSI)<br>https://github.com/dataofjapan/land/blob/master/japan.geojson|
 
 ## Data Collection Process
 1. Convert the "Number of dementia-related missing persons by prefecture in Japan" from PDF to a CSV file. Data from 2012 to 2023 was available in a single file, while the 2024 data was released in June and was merged into the same dataset.
